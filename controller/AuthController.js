@@ -25,7 +25,6 @@ const createSendToken = (user, res) => {
 // SignUp Function
 export const signup = AsyncHandler(async (req, res, next) => {
    const { firstname, lastname, email, password } = req.body;
-   // console.log(req.body)
 
    const user = await User.create({
       name: {
@@ -35,8 +34,6 @@ export const signup = AsyncHandler(async (req, res, next) => {
       email,
       password,
    });
-
-   console.log(user);
 
    //   Generate JWT Token and send via Cookie
    // createSendToken(user, res);

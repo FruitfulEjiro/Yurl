@@ -1,7 +1,10 @@
+// Core Modules
 import express from "express";
 import cookieParser from "cookie-parser";
-import { signup } from "./controller/AuthController.js";
+
+// Local Modules
 import errorHandler from "./utils/ErrorHandler.js";
+import authRoutes from "./routes/authRoutes.js"
 
 const app = express();
 
@@ -9,7 +12,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.post("/signup", signup);
+// App Routers
+app.use("/api/v1/auth", authRoutes);
 
 app.use(errorHandler);
 

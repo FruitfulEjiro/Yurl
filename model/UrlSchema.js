@@ -1,12 +1,17 @@
 import mongoose from "mongoose";
 
-const urlSchema = mongoose.Schema({
-   origiinalUrl: {
-      tpye: String,
-      required: true,
+const urlSchema = new mongoose.Schema({
+   originalUrl: {
+      type: String,
+      required: [true, "you must have an original url"],
       trim: true,
    },
    shortUrl: {
+      type: String,
+      required: true,
+      trim: true,
+   },
+   UrlID: {
       type: String,
       required: true,
       trim: true,
@@ -15,6 +20,7 @@ const urlSchema = mongoose.Schema({
       type: String,
       trim: true,
       required: false,
+      default: "",
    },
    clicks: {
       type: Number,
@@ -23,11 +29,12 @@ const urlSchema = mongoose.Schema({
    },
    userId: {
       type: String,
-      required: true,
+      required: false,
    },
    expiresAt: {
       type: Date,
       required: false,
+      default: null
    },
    createdAt: {
       type: Date,
@@ -37,4 +44,5 @@ const urlSchema = mongoose.Schema({
 });
 
 const Url = mongoose.model("Url", urlSchema);
+
 export default Url;

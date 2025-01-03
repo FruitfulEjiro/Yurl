@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
-import User from "../model/UserSchema.js";
 import AsyncHandler from "express-async-handler";
+
+// Local Modules
+import User from "../model/UserSchema.js";
 import AppError from "../utils/AppError.js";
 
 // Generate JWT
@@ -52,7 +54,7 @@ export const login = AsyncHandler(async (req, res, next) => {
 
    // Check if user exists and if password is correct using Mongoose Instsnce Methods
    if (!user && !(await User.correctPassword(password, user.password))) {
-      return next(new AppError("Invalid Email or Password"), 400)
+      return next(new AppError("Invalid Email or Password"), 400);
    }
    //   Generate JWT Token and send via Cookie
    createSendToken(user, 200, res);

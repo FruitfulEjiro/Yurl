@@ -4,7 +4,8 @@ import cookieParser from "cookie-parser";
 
 // Local Modules
 import errorHandler from "./utils/ErrorHandler.js";
-import authRoutes from "./routes/authRoutes.js"
+import authRoutes from "./routes/authRoutes.js";
+import passportSetup from "./controller/passportController.js";
 
 const app = express();
 

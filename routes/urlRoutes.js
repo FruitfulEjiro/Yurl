@@ -1,8 +1,10 @@
 import express from "express";
-import { shortenOne } from "../controller/urlController.js";
+import { shortenOne, fetchUrl } from "../controller/urlController.js";
 
 const router = express.Router();
 
-router.post("/one", shortenOne);
+router.post("/shorten/one", shortenOne);
 
-export default router
+router.get("/:id", fetchUrl);
+
+export default router;

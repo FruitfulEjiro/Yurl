@@ -16,12 +16,6 @@ const urlSchema = new mongoose.Schema({
       required: true,
       trim: true,
    },
-   customAlias: {
-      type: String,
-      trim: true,
-      required: false,
-      default: "",
-   },
    clicks: {
       type: Number,
       default: 0,

@@ -9,6 +9,8 @@ import authRoutes from "./routes/authRoutes.js";
 import urlRoutes from "./routes/urlRoutes.js";
 // import passportSetup from "./controller/passportController.js";
 
+import { fetchUrl } from "./controller/urlController.js";
+
 const app = express();
 
 app.use(express.json());
@@ -21,7 +23,9 @@ app.use(cookieParser());
 
 // App Routers
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/shorten", urlRoutes);
+app.use("/api/v1/url", urlRoutes);
+
+app.get("/:id", fetchUrl);
 
 app.use(errorHandler);
 

@@ -12,6 +12,14 @@ export const shortenOne = AsyncHandler(async (req, res, next) => {
    const newUrl = nanoid();
    const parentDomain = "localhost:8080";
 
+   // check if customAlias exists
+   if (await Url.findOne({ UrlID: customAlias })) {
+      res.status(400).json({
+         status: "Failed",
+         message: "Custom Name already exists",
+      });
+   }
+
    const url = await Url.create({
       originalUrl,
       shortUrl: customAlias ? `${parentDomain}/${customAlias}` : `${parentDomain}/${newUrl}`,
@@ -19,10 +27,8 @@ export const shortenOne = AsyncHandler(async (req, res, next) => {
       expiresAt: expiresAt || null,
    });
 
-   console.log("new url", url);
-
    res.status(201).json({
-      status: "url shortened success",
+      status: "URL Shortened Successfully",
       url: url.shortUrl,
    });
 });
@@ -40,4 +46,8 @@ export const fetchUrl = AsyncHandler(async (req, res, next) => {
          redirect: url.originalUrl,
       });
    }
+});
+
+export const deleteExpiredUrl = AsyncHandler(async (req, res) => {
+   const url = await Url.deleteMany({ expiresAt: { $lte: new Date() } });
 });

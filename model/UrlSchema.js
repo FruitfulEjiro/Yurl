@@ -15,6 +15,7 @@ const urlSchema = new mongoose.Schema({
       type: String,
       required: true,
       trim: true,
+      unique: true,
    },
    clicks: {
       type: Number,
@@ -28,7 +29,7 @@ const urlSchema = new mongoose.Schema({
    expiresAt: {
       type: Date,
       required: false,
-      default: null
+      default: null,
    },
    createdAt: {
       type: Date,

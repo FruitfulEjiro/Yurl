@@ -1,15 +1,9 @@
 import express from "express";
-import { signup } from "../controller/AuthController.js";
+import { signup, login, signout } from "../controller/AuthController.js";
 // import passport from "passport";
 
 const router = express.Router();
 
-router.post("/signup", signup);
-
-// router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
-
-// router.get("/google/redirect", passport.authenticate("google", { failureRedirect: "/login" }), (req, res) => {
-//    res.redirect("/");
-// });
+router.post("/signup", signup).post("/login", login).get("/signout", signout);
 
 export default router;

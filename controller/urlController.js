@@ -1,9 +1,11 @@
 import { customAlphabet } from "nanoid";
 import AsyncHandler from "express-async-handler";
-import cron from "node-cron";
+import AppError from "../utils/AppError.js";
 
 // Local Modules
 import Url from "../model/UrlSchema.js";
+
+// +++++++++++++++++++++++++++++++++++++++++++++
 
 export const shortenOne = AsyncHandler(async (req, res, next) => {
    const { originalUrl, customAlias, expiresAt } = req.body;
@@ -26,6 +28,7 @@ export const shortenOne = AsyncHandler(async (req, res, next) => {
       UrlID: customAlias || newUrl,
       expiresAt: expiresAt || null,
    });
+   console.log(url);
 
    res.status(201).json({
       status: "URL Shortened Successfully",
@@ -38,16 +41,46 @@ export const fetchUrl = AsyncHandler(async (req, res, next) => {
 
    const url = await Url.findOne({ UrlID: id });
 
-   console.log(`/${url.originalUrl}`);
-
-   if (url) {
-      res.status(200).json({
-         status: "success",
-         redirect: url.originalUrl,
+   if (!url) {
+      res.status(404).json({
+         status: "Failed",
+         message: "URL not found",
       });
    }
+   res.status(200).json({
+      status: "success",
+      redirect: url.originalUrl,
+   });
 });
 
-export const deleteExpiredUrl = AsyncHandler(async (req, res) => {
+export const updateUrl = AsyncHandler(async (req, res, next) => {
+   const { id } = req.params;
+   const { originalUrl, customAlias, expiresAt } = req.body;
+   const parentDomain = "localhost:8080";
+
+   const url = await Url.findByIdAndUpdate(id, {
+      originalUrl,
+      shortUrl: customAlias ? `${parentDomain}/${customAlias}` : undefined,
+      UrlID: customAlias,
+      expiresAt,
+   });
+
+   res.status(200).json({
+      status: "success",
+      message: "URL updated successfully",
+   });
+});
+
+export const autoDeleteExpiredUrl = AsyncHandler(async (req, res, next) => {
    const url = await Url.deleteMany({ expiresAt: { $lte: new Date() } });
+});
+
+export const deleteUrl = AsyncHandler(async (req, res, next) => {
+   const { id } = req.params;
+   await Url.deleteOne({ id });
+
+   res.status(200).json({
+      status: "success",
+      message: "URL deleted successfully",
+   });
 });

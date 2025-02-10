@@ -25,6 +25,9 @@ const createSendToken = (user, statusCode, res) => {
 
    res.status(statusCode).cookie("jwt", token, cookieOptions).json({
       status: "Successful",
+      data: {
+         user,
+      },
    });
 };
 
@@ -46,7 +49,7 @@ export const signup = AsyncHandler(async (req, res, next) => {
    next();
 });
 
-// Login function
+// Login Function
 export const login = AsyncHandler(async (req, res, next) => {
    const { email, password } = req.body;
 
@@ -58,4 +61,61 @@ export const login = AsyncHandler(async (req, res, next) => {
    }
    //   Generate JWT Token and send via Cookie
    createSendToken(user, 200, res);
+});
+
+// Protect Routes
+export const protect = AsyncHandler(async (req, res, next) => {
+   const token = req.cookies.jwt;
+
+   if (!token) {
+      return res.status(401).json({
+         status: "Failed",
+         message: "You are not logged in",
+         redirect: "/login",
+      });
+   }
+
+   // verify JWT
+   const decoded = jwt.verify(token, process.env.JWT_SECRET);
+   if (!decoded) {
+      return res.status(401).json({
+         status: "Failed",
+         message: "You are not logged in",
+         redirect: "/login",
+      });
+   }
+
+   // Find user by ID fro decoded token
+   const user = await User.findById(decoded.id);
+   if (!user) {
+      return res.status(401).json({
+         status: "Failed",
+         message: "The user with this token no longer exists",
+         redirect: "/login",
+      });
+   }
+});
+
+// Set authorization for links so a user can only update, delete and fetch his shortened links.
+
+// Sign out Function
+export const signout = AsyncHandler(async (req, res, next) => {
+   const token = req.cookies.jwt;
+   if (!token) {
+      return res.status(200).json({
+         status: "Success",
+         message: "You are not logged in",
+      });
+   }
+   // Remove JWT from cookies
+   res.status(200)
+      .cookie("jwt", "Logged Out", {
+         expires: new Date(Date.now() + 10 * 1000),
+         httpOnly: true,
+      })
+      .json({
+         status: "Success",
+         message: "Logged out successfully",
+         redirect: "/",
+      });
 });

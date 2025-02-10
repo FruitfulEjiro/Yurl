@@ -4,7 +4,7 @@ import cron from "node-cron";
 // Local Modules
 import app from "./app.js";
 import connectDB from "./model/DB.js";
-import { deleteExpiredUrl } from "./controller/urlController.js";
+import { autoDeleteExpiredUrl } from "./controller/urlController.js";
 
 config();
 
@@ -13,7 +13,7 @@ connectDB();
 
 // Delete Expired URL from Database
 cron.schedule("* * * * * *", () => {
-   deleteExpiredUrl();
+   autoDeleteExpiredUrl();
 });
 
 const PORT = process.env.PORT;

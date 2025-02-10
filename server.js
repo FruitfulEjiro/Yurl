@@ -12,9 +12,11 @@ config();
 connectDB();
 
 // Delete Expired URL from Database
-cron.schedule("* * * * * *", () => {
-   autoDeleteExpiredUrl();
-});
+setTimeout(() => {
+   cron.schedule("* * * * * *", () => {
+      autoDeleteExpiredUrl();
+   });
+}, 1000 * 60);
 
 const PORT = process.env.PORT;
 // Start Server

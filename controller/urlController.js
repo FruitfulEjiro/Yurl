@@ -1,5 +1,8 @@
 import { customAlphabet } from "nanoid";
 import AsyncHandler from "express-async-handler";
+import validator from "validator";
+
+// Local Modules
 import AppError from "../utils/AppError.js";
 
 // Local Modules
@@ -9,6 +12,11 @@ import Url from "../model/UrlSchema.js";
 
 export const shortenOne = AsyncHandler(async (req, res, next) => {
    const { originalUrl, customAlias, expiresAt } = req.body;
+
+   // Validate Url
+   if (!validator.isURL(originalUrl, { protocols: ["http", "https"], require_protocol: true, require_tld: true })) {
+      return next(new AppError("Invalid Url", 400));
+   }
 
    const nanoid = customAlphabet(process.env.ALPHABET, 10);
    const newUrl = nanoid();
@@ -40,6 +48,11 @@ export const shortenMany = AsyncHandler(async (req, res, next) => {
 
    const urlPromises = urlArray.map(async (url) => {
       const { originalUrl, customAlias, expiresAt } = url;
+      // Validate url
+      if (!validator.isURL(originalUrl, { protocols: ["http", "https"], require_protocol: true, require_tld: true })) {
+         return next(new AppError("Invalid Url", 400));
+      }
+
       const nanoid = customAlphabet(process.env.ALPHABET, 10);
       const newUrl = nanoid();
       const parentDomain = "localhost:8080";

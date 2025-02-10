@@ -40,21 +40,6 @@ const urlSchema = new mongoose.Schema({
 });
 
 // ---------------- Document Middleware ------------------
-// urlSchema.pre("save", async function (next) {
-//    const nanoid = customAlphabet(process.env.ALPHABET, 10);
-//    const newUrl = nanoid();
-//    const parentDomain = "localhost:8080";
-
-//    // check if customAlias exists
-//    if (await Url.findOne({ UrlID: customAlias })) {
-//       res.status(400).json({
-//          status: "Failed",
-//          message: "Custom Name already exists",
-//       });
-//    }
-
-//    this.shortUrl = customAlias ? `${parentDomain}/${customAlias}` : `${parentDomain}/${newUrl}`;
-// });
 
 const Url = mongoose.model("Url", urlSchema);
 

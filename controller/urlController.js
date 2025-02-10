@@ -28,11 +28,43 @@ export const shortenOne = AsyncHandler(async (req, res, next) => {
       UrlID: customAlias || newUrl,
       expiresAt: expiresAt || null,
    });
-   console.log(url);
 
    res.status(201).json({
       status: "URL Shortened Successfully",
       url: url.shortUrl,
+   });
+});
+
+export const shortenMany = AsyncHandler(async (req, res, next) => {
+   const urlArray = req.body.urls;
+
+   const urlPromises = urlArray.map(async (url) => {
+      const { originalUrl, customAlias, expiresAt } = url;
+      const nanoid = customAlphabet(process.env.ALPHABET, 10);
+      const newUrl = nanoid();
+      const parentDomain = "localhost:8080";
+
+      // check if customAlias exists
+      if (await Url.findOne({ UrlID: customAlias })) {
+         res.status(400).json({
+            status: "Failed",
+            message: "Custom Name already exists",
+         });
+      }
+
+      const urlObj = await Url.create({
+         originalUrl,
+         shortUrl: customAlias ? `${parentDomain}/${customAlias}` : `${parentDomain}/${newUrl}`,
+         UrlID: customAlias || newUrl,
+         expiresAt: expiresAt || null,
+      });
+   });
+
+   const allUrl = Promise.all(urlPromises);
+
+   res.status(201).json({
+      status: "Success",
+      message: "Urls Shortened Successfully",
    });
 });
 

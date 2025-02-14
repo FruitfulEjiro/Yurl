@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import AppError from "../utils/AppError.js";
+import { customAlphabet } from "nanoid";
 
 const urlSchema = new mongoose.Schema({
    originalUrl: {
@@ -24,6 +24,11 @@ const urlSchema = new mongoose.Schema({
       required: false,
    },
    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+   },
+   QRCode: {
       type: String,
       required: false,
    },
@@ -40,6 +45,13 @@ const urlSchema = new mongoose.Schema({
 });
 
 // ---------------- Document Middleware ------------------
+// Document middleware to shorten url
+urlSchema.pre("save", async function (next) {
+   const nanoid = customAlphabet(process.env.ALPHABET, 10);
+   const parentDomain = "localhost:8080";
+
+   this.shortUrl = `${parentDomain}/${this.UrlID}`;
+});
 
 const Url = mongoose.model("Url", urlSchema);
 

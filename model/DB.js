@@ -5,8 +5,12 @@ import AsyncHandler from "express-async-handler";
 config();
 
 const connectDB = AsyncHandler(async () => {
-   const connection = await mongoose.connect(process.env.MONGO_URI);
-   console.log("Connection Successful");
+   try {
+      const connection = await mongoose.connect(process.env.MONGO_URI);
+      console.log("Connection Successful");
+   } catch (error) {
+      console.log(error);
+   }
 });
 
 export default connectDB;

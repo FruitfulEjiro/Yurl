@@ -3,12 +3,12 @@ import express from "express";
 import cookieParser from "cookie-parser";
 
 // Local Modules
-import errorHandler from "./utils/ErrorHandler.js";
+import ErrorHandler from "./utils/ErrorHandler.js";
+import AppError from "./utils/AppError.js";
 import authRoutes from "./routes/authRoutes.js";
 import urlRoutes from "./routes/urlRoutes.js";
-// import passportSetup from "./controller/passportController.js";
 
-import { fetchUrl, updateUrl } from "./controller/urlController.js";
+import { fetchUrl } from "./controller/urlController.js";
 
 const app = express();
 
@@ -26,7 +26,12 @@ app.get("/", (req, res) => {
    res.send("This is the Default page");
 });
 
+// Handling unhandled routes
+app.all("*", (req, res, next) => {
+   return next(new AppError(`Cant find ${req.originalUrl} on this server`, 404));
+});
 
-app.use(errorHandler);
+// error handling middleware
+app.use(ErrorHandler);
 
 export default app;

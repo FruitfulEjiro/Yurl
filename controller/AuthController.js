@@ -3,6 +3,7 @@ import AsyncHandler from "express-async-handler";
 
 // Local Modules
 import User from "../model/UserSchema.js";
+import Url from "../model/UrlSchema.js";
 import AppError from "../utils/AppError.js";
 
 // Generate JWT
@@ -43,6 +44,8 @@ export const signup = AsyncHandler(async (req, res, next) => {
       email,
       password,
    });
+
+   if (!user) return next(new AppError("User not created", 400));
 
    //   Generate JWT Token and send via Cookie
    createSendToken(user, 201, res);
@@ -94,23 +97,37 @@ export const protect = AsyncHandler(async (req, res, next) => {
          redirect: "/login",
       });
    }
+
+   req.user = user;
+   next();
 });
 
-// Set authorization for links so a user can only update, delete and fetch his shortened links.
+// user authenticatio to Update, Delete and Fetch Url
+export const urlAuth = AsyncHandler(async (req, res, next) => {
+   const userid = req.user._id;
+   const { id } = req.params;
+
+   const url = await Url.findOne({ UrlID: id });
+   if (!url) {
+      return next(new AppError("Url not found", 404));
+   }
+
+   // Check if ID in user corresponds with ID in url
+   if (userid !== url.userId) return next(new AppError("You didnt create this Url", 400));
+
+   next()
+});
 
 // Sign out Function
 export const signout = AsyncHandler(async (req, res, next) => {
    const token = req.cookies.jwt;
    if (!token) {
-      return res.status(200).json({
-         status: "Success",
-         message: "You are not logged in",
-      });
+      return next(new AppError("You are not logged in", 200));
    }
    // Remove JWT from cookies
    res.status(200)
       .cookie("jwt", "Logged Out", {
-         expires: new Date(Date.now() + 10 * 1000),
+         expires: new Date(Date.now() + 5 * 1000),
          httpOnly: true,
       })
       .json({

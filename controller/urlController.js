@@ -10,7 +10,7 @@ import Url from "../model/UrlSchema.js";
 // Generate QR Code
 const createQRCodeFromURL = (url) => {
    return new Promise((resolve, reject) => {
-      QRCode.toDataURL(url, (err, qrCode) => {
+      QRCode.toDataURL(url, { errorCorrectionLevel: 'H' } , (err, qrCode) => {
          if (err) {
             reject(err);
          } else {

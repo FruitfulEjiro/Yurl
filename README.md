@@ -108,6 +108,8 @@ The API uses JWT (JSON Web Tokens) for authentication. Users must sign up and lo
     }
     ```
 
+
+
 - **GET /url/:id**
   - **Description**: Fetch the original URL using the shortened ID.
   - **Response**:

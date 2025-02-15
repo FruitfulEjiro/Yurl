@@ -44,6 +44,15 @@ const urlSchema = new mongoose.Schema({
    },
 });
 
+// Add index for UrlID
+urlSchema.index({ UrlID: 1 });
+
+// Add compound index for efficient tag queries
+urlSchema.index({ userId: 1, tags: 1 });
+
+// Add index for custom aliases
+urlSchema.index({ customAlias: 1 });
+
 // ---------------- Document Middleware ------------------
 // Document middleware to shorten url
 urlSchema.pre("save", async function (next) {
@@ -51,6 +60,7 @@ urlSchema.pre("save", async function (next) {
    const parentDomain = "localhost:8080";
 
    this.shortUrl = `${parentDomain}/${this.UrlID}`;
+   next();
 });
 
 const Url = mongoose.model("Url", urlSchema);

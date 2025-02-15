@@ -10,7 +10,7 @@ import Url from "../model/UrlSchema.js";
 // Generate QR Code
 const createQRCodeFromURL = (url) => {
    return new Promise((resolve, reject) => {
-      QRCode.toDataURL(url, { errorCorrectionLevel: 'H' } , (err, qrCode) => {
+      QRCode.toDataURL(url, { errorCorrectionLevel: "H" }, (err, qrCode) => {
          if (err) {
             reject(err);
          } else {
@@ -21,7 +21,7 @@ const createQRCodeFromURL = (url) => {
 };
 
 // +++++++++++++++++++++++++++++++++++++++++++++
-
+// Shorten one URL
 export const shortenOne = AsyncHandler(async (req, res, next) => {
    const { originalUrl, customAlias, expiresAt } = req.body;
 
@@ -53,6 +53,7 @@ export const shortenOne = AsyncHandler(async (req, res, next) => {
    });
 });
 
+// Shorten Multiple URLs
 export const shortenMany = AsyncHandler(async (req, res, next) => {
    const urlArray = req.body.urls;
 
@@ -89,6 +90,7 @@ export const shortenMany = AsyncHandler(async (req, res, next) => {
    });
 });
 
+// Fetch one URL
 export const fetchUrl = AsyncHandler(async (req, res, next) => {
    const { id } = req.params;
 
@@ -103,6 +105,7 @@ export const fetchUrl = AsyncHandler(async (req, res, next) => {
    });
 });
 
+// Update one URL
 export const updateUrl = AsyncHandler(async (req, res, next) => {
    const { id } = req.params;
    const { originalUrl, customAlias, expiresAt } = req.body;
@@ -131,11 +134,13 @@ export const updateUrl = AsyncHandler(async (req, res, next) => {
    });
 });
 
+// Auto Delete Expired URLs
 export const autoDeleteExpiredUrl = AsyncHandler(async (req, res, next) => {
    const url = await Url.deleteMany({ expiresAt: { $lte: new Date() } });
    if (!url) return next(new AppError("Url Not Found", 404));
 });
 
+// Delete one URL
 export const deleteUrl = AsyncHandler(async (req, res, next) => {
    const { id } = req.params;
    const url = await Url.deleteOne({ id });

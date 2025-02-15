@@ -19,6 +19,7 @@ const limiter = rateLimit({
    message: "Too many requests, try again in 1 hour",
 });
 
+// limits the size of the data that can be sent in a request
 app.use(
    express.json({
       limit: "1mb",
@@ -35,6 +36,7 @@ app.use(limiter);
 
 // Data Sanitization against NoSQL query injection
 app.use(mongoSanitize());
+
 // Data sanitization against Cross-site-scripting
 app.use(xss());
 

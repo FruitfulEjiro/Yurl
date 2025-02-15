@@ -173,8 +173,6 @@ The API returns appropriate HTTP status codes and error messages for various sce
 ## Future Enhancements
 - Password protected URLs
 - Click analytics with geographical data
-- URL collections/folders
-- A/B testing support
 
 ## Conclusion
 This documentation provides a comprehensive overview of the URL Shortener API, including its endpoints, request/response formats, and future enhancements. For any questions or issues, please refer to the support team.

@@ -86,6 +86,7 @@ export const shortenMany = AsyncHandler(async (req, res, next) => {
    res.status(201).json({
       status: "success",
       message: "Urls Shortened Successfully",
+      urls: allUrl,
       // return each URL and its short Url
    });
 });

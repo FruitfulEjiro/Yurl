@@ -54,7 +54,7 @@ app.use("/url", urlRoutes);
 app.get("/:id", fetchUrl);
 
 app.get("/", (req, res) => {
-   res.status(200).send("This is the Default page");
+   res.status(200).redirect("https://github.com/FruitfulEjiro/Yurl");
 });
 
 // Handling unhandled routes

@@ -4,7 +4,7 @@
 This API allows users to shorten URLs, manage their shortened links, and generate QR codes for easy sharing. It provides endpoints for creating, fetching, updating, and deleting URLs, as well as user authentication features.
 
 ## Base URL
-The base URL for the API is `http://localhost:8080`.
+The base URL for the API is `https://yurl.onrender.com`.
 
 ## Authentication
 The API uses JWT (JSON Web Tokens) for authentication. Users must sign up and log in to receive a token, which must be included in the headers of subsequent requests.
@@ -92,6 +92,8 @@ The API uses JWT (JSON Web Tokens) for authentication. Users must sign up and lo
       ]
     }
     ```
+    - **Note**: The request must contain an array with property name urls. The `urls` array can contain multiple URLs to be shortened.
+    
   - **Response**:
     - Status: 201 Created
     - Body:

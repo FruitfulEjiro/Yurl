@@ -92,8 +92,8 @@ The API uses JWT (JSON Web Tokens) for authentication. Users must sign up and lo
       ]
     }
     ```
-    - **Note**: The request must contain an array with property name urls. The `urls` array can contain multiple URLs to be shortened.
-    
+    - **Note**: The request object must contain an array with property name urls. The `urls` array can contain multiple URLs to be shortened.
+
   - **Response**:
     - Status: 201 Created
     - Body:

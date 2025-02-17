@@ -12,7 +12,6 @@ import ErrorHandler from "./utils/ErrorHandler.js";
 import AppError from "./utils/AppError.js";
 import authRoutes from "./routes/authRoutes.js";
 import urlRoutes from "./routes/urlRoutes.js";
-
 import { fetchUrl } from "./controller/urlController.js";
 
 const app = express();
@@ -55,7 +54,7 @@ app.use("/url", urlRoutes);
 app.get("/:id", fetchUrl);
 
 app.get("/", (req, res) => {
-   res.send("This is the Default page");
+   res.status(200).send("This is the Default page");
 });
 
 // Handling unhandled routes

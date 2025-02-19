@@ -124,7 +124,7 @@ The API uses JWT (JSON Web Tokens) for authentication. Users must sign up and lo
     }
     ```
 
-- **PUT /url/:id**
+- **PATCH /url/:id**
   - **Description**: Update an existing shortened URL.
   - **Request Body**:
     ```json

@@ -24,6 +24,7 @@ const createQRCodeFromURL = (url) => {
 // Shorten one URL
 export const shortenOne = AsyncHandler(async (req, res, next) => {
    const { originalUrl, customAlias, expiresAt } = req.body;
+   const {id} = req.user
 
    // Validate Url
    if (!validator.isURL(originalUrl, { protocols: ["http", "https"], require_protocol: true, require_tld: true })) {

@@ -7,9 +7,9 @@ import { protect } from "../controller/AuthController.js";
 const router = express.Router();
 
 router
-   .post("/shorten/one", shortenOne)
-   .post("/shorten/many", shortenMany)
-   .get("/qr-code/:id", createQRCode)
+   .post("/shorten/one", protect, shortenOne)
+   .post("/shorten/many", protect, shortenMany)
+   .get("/qr-code/:id", protect, createQRCode)
    .get("/:id", fetchUrl)
    .patch("/update/:id", protect, updateUrl)
    .delete("/delete/:id", protect, deleteUrl);

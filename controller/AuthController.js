@@ -17,7 +17,7 @@ const generateToken = (userID) => {
 const createSendToken = (user, statusCode, res) => {
    const token = generateToken(user._id);
    const cookieOptions = {
-      expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN || 24 * 60 * 60 * 1000),
+      expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
       httpOnly: true,
    };
    if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
@@ -64,6 +64,7 @@ export const login = AsyncHandler(async (req, res, next) => {
    }
    //   Generate JWT Token and send via Cookie
    createSendToken(user, 200, res);
+   next()
 });
 
 // Protect Routes

@@ -2,31 +2,34 @@
    "name": "yurl",
    "version": "1.0.0",
    "description": "A URL Shortener",
-   "main": "server.js",
-   "type": "module",
+   "main": "index.js",
    "scripts": {
-      "start": "nodemon server.js"
+      "build": "tsc --build",
+      "start": "node ./dist/index.js",
+      "dev": "nodemon ./src/index.ts"
    },
    "author": "Fruitful Ejiro",
    "license": "MIT",
    "dependencies": {
       "bcryptjs": "^2.4.3",
       "cookie-parser": "^1.4.7",
-      "dotenv": "^16.4.7",
+      "dotenv": "^16.6.1",
       "express": "^4.21.2",
-      "express-async-handler": "^1.2.0",
-      "express-mongo-sanitize": "^2.2.0",
-      "express-rate-limit": "^7.5.0",
-      "helmet": "^8.0.0",
-      "hpp": "^0.2.3",
+      "express-rate-limit": "^7.5.1",
       "jsonwebtoken": "^9.0.2",
-      "mongodb": "^6.12.0",
-      "mongoose": "^8.9.2",
-      "nanoid": "^5.0.9",
+      "morgan": "^1.10.1",
+      "nanoid": "^5.1.5",
       "node-cron": "^3.0.3",
-      "nodemon": "^3.1.9",
+      "nodecron": "^0.2.0",
+      "nodemon": "^3.1.10",
       "qrcode": "^1.5.4",
-      "validator": "^13.12.0",
-      "xss-clean": "^0.1.4"
+      "winston": "^3.17.0"
+   },
+   "devDependencies": {
+      "@types/cookie-parser": "^1.4.9",
+      "@types/express": "^5.0.3",
+      "@types/morgan": "^1.9.10",
+      "ts-node": "^10.9.2",
+      "typescript": "^5.9.2"
    }
 }

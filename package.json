@@ -1,0 +1,38 @@
+{
+   "name": "yurl",
+   "version": "0.0.1",
+   "description": "A URL Shortener",
+   "type": "commonjs",
+   "scripts": {
+      "start": "ts-node src/index.ts",
+      "build": "tsc --build",
+      "dev": "nodemon src/index.ts",
+      "typeorm": "typeorm-ts-node-commonjs"
+   },
+   "dependencies": {
+      "bcryptjs": "^3.0.2",
+      "cookie-parser": "^1.4.7",
+      "dotenv": "^17.2.1",
+      "express": "^5.1.0",
+      "express-rate-limit": "^8.0.1",
+      "jsonwebtoken": "^9.0.2",
+      "morgan": "^1.10.1",
+      "nanoid": "^5.1.5",
+      "nodemon": "^3.1.10",
+      "pg": "^8.16.3",
+      "qrcode": "^1.5.4",
+      "reflect-metadata": "^0.2.2",
+      "winston": "^3.17.0",
+      "zod": "^4.0.17"
+   },
+   "devDependencies": {
+      "@types/cookie-parser": "^1.4.9",
+      "@types/express": "^5.0.3",
+      "@types/jsonwebtoken": "^9.0.10",
+      "@types/morgan": "^1.9.10",
+      "@types/node": "^22.17.1",
+      "ts-node": "^10.9.2",
+      "typeorm": "^0.3.25",
+      "typescript": "^5.9.2"
+   }
+}

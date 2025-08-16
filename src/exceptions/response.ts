@@ -8,7 +8,7 @@ type payload = {
    refreshToken?: string;
 };
 
-export const successResponse = (res: Response, data: payload, message: string, statusCode: number = 200) => {
+export const successResponse = <T>(res: Response, data: T, message: string, statusCode: number = 200) => {
    return res.status(statusCode).json({
       success: true,
       status: "success",
@@ -35,6 +35,6 @@ export const sendCookie = (res: Response, data: payload, message: string, status
          success: true,
          status: "success",
          message,
-         data,
+         data: data.user,
       });
 };

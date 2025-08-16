@@ -12,7 +12,7 @@ export class jwtHelper {
    };
 
    static generateRefreshToken = (user: IUser): string => {
-      const token = jwt.sign({ id: user.id, email: user.email }, CONFIG.ENV.ACCESS_TOKEN_SECRET, {
+      const token = jwt.sign({ id: user.id, email: user.email }, CONFIG.ENV.REFRESH_TOKEN_SECRET, {
          expiresIn: "1hr",
       });
       return token;

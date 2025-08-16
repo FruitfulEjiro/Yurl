@@ -10,15 +10,8 @@ export const AppDataSource = new DataSource({
       rejectUnauthorized: false,
    },
    synchronize: false,
-   logging: process.env.NODE_ENV !== "production",
+   logging: false,
    entities: [UserEntity],
-   migrations: [],
+   migrations: ["src/migration/**/*.ts"],
    subscribers: [],
 });
-
-AppDataSource.initialize()
-   .then(async () => {
-      console.log("Connected to Database Successfully");
-      await AppDataSource.runMigrations();
-   })
-   .catch((error) => console.log("Couldnt connect to Database", error));

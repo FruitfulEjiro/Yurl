@@ -2,18 +2,27 @@ import express from "express";
 import morgan from "morgan";
 
 import "./interfaces/global.interface";
-
-const app = express();
-
-// initialize DB
-import "./config/data-source";
 import routes from "./routes/index.route";
 import CONFIG from "./config/config";
 import ErrorHandler from "./exceptions/ErrorHandler";
+import { AppDataSource } from "./config/data-source";
+import CookieParser from "cookie-parser";
+
+const app = express();
 
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(CookieParser());
+
+(() => {
+   AppDataSource.initialize()
+      .then(async () => {
+         console.log("Connected to Database Successfully");
+         // await AppDataSource.runMigrations();
+      })
+      .catch((error) => console.log("Couldnt connect to Database", error));
+})();
 
 app.get("/", (req, res) => {
    res.send("Api is Running");

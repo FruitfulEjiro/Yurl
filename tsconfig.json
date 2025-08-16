@@ -1,7 +1,7 @@
 {
    "compilerOptions": {
       "lib": ["es2021"],
-      "target": "es2021",
+      "target": "es6",
       "module": "commonjs",
       "moduleResolution": "node",
       "rootDir": "./src",
@@ -17,5 +17,6 @@
       "strictFunctionTypes": true,
       "skipLibCheck": true,
       "strictPropertyInitialization": false
-   }
+   },
+   "include": ["src/**/*"]
 }

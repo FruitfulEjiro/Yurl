@@ -15,5 +15,12 @@ export const protect = catchAsync(async (req: Request, res: Response, next: Next
    const user = await UserService.getUserById(decoded.id);
    if (!user) return next(new AppError("User doesnt exist", statusCodes.NOT_FOUND));
 
-   // generate new tokens
+   if (
+      user.passwordChangedAt !== null &&
+      new Date(user.passwordChangedAt!).getTime() > new Date(decoded.iat!).getTime()
+   )
+      return next(new AppError("password was changed. Login again!!!", statusCodes.FORBIDDEN));
+
+   req.user = user;
+   next();
 });

@@ -7,7 +7,9 @@
       "start": "ts-node src/index.ts",
       "build": "tsc --build",
       "dev": "nodemon src/index.ts",
-      "typeorm": "typeorm-ts-node-commonjs"
+      "typeorm": "typeorm-ts-node-commonjs",
+      "migrate:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate src/migration/$MIGRATION_NAME -d src/config/data-source.ts",
+      "migrate:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d src/config/data-source.ts"
    },
    "dependencies": {
       "bcryptjs": "^3.0.2",

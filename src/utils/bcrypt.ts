@@ -16,7 +16,7 @@ export class bcryptHelper {
          const correctPassword = await bcrypt.compare(password, DBPassword);
          return correctPassword;
       } catch (err) {
-         throw new Error("Error COmparing Password");
+         throw new Error("Error Comparing Password");
       }
    }
 }

@@ -14,21 +14,27 @@ export class UserEntity {
    @Column("varchar", { unique: true })
    email: string;
 
-   @Column("varchar", { unique: true, select: false })
+   @Column("varchar", { select: false })
    password: string;
 
-   @Column("varchar", {})
+   @Column("varchar", { nullable: true })
    avatar: string;
 
-   @Column("varchar", {})
+   @Column("varchar", { nullable: true, select: false })
    passwordResetToken: string;
 
-   @Column()
+   @Column({ type: "timestamp", nullable: true, select: false })
    passwordChangedAt: Date;
 
-   @Column()
+   @Column("varchar", { nullable: true, select: false })
+   refreshToken: string;
+
+   @Column({ type: "timestamp", nullable: true, select: false })
+   tokenExp: Date;
+
+   @Column({ type: "timestamp", nullable: true })
    updatedAt: Date;
 
-   @Column({ default: Date.now })
+   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
    createdAt: Date;
 }

@@ -3,12 +3,13 @@ export interface IUser {
    firstname?: string;
    lastname?: string;
    email?: string;
+   password?: string;
    avatar?: string;
    passwordResetToken?: string;
    passwordChangedAt?: Date;
-   refreshToken?: string
+   refreshToken?: string;
+   tokenExp?: Date;
 
-   password?: string;
    udatedAt?: Date;
    createdAt?: Date;
 }
